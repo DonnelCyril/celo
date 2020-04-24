@@ -2,9 +2,6 @@
     public class Program
     {
 
-        //wei.pan@celohealth.com
-        //CreateHostBuilder(args).Build().Run();
-
         public static void Main(string[] args)
         {
 
