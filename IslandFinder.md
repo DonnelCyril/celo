@@ -1,22 +1,20 @@
 ```csharp
-    public class Program
+        public class Program
     {
 
         public static void Main(string[] args)
         {
-
-            var mat = new[,]
-            {
+            var mat = new[,] {
                 {1, 1, 0, 0, 0},
                 {0, 1, 0, 0, 1},
                 {1, 0, 0, 1, 1},
-                {1, 1, 0, 0, 0},
-                {0, 1, 0, 0, 1},
-                {1, 0, 0, 1, 1},
+                {0, 0, 0, 0, 0},
+                {1, 0, 1, 0, 1}
             };
             var count = GetIslandCounter(mat);
             Console.WriteLine($"Islands: {count}");
         }
+
         static int GetIslandCounter(int[,] matrix)
         {
             var knownOneIndexes = new HashSet<(int, int)>();
@@ -60,15 +58,18 @@
             Positions.Select(position => (position.rowPosition, position.columnPosition) switch
             {
                 ("Top", "Left") => (index.row - 1, index.column - 1),
+                ("Top", "Center") => (index.row - 1, index.column),
                 ("Top", "Right") => (index.row - 1, index.column + 1),
                 ("Middle", "Left") => (index.row, index.column - 1),
+                ("Middle", "Center") => (index.row, index.column),
                 ("Middle", "Right") => (index.row, index.column + 1),
                 ("Bottom", "Left") => (index.row + 1, index.column - 1),
+                ("Bottom", "Center") => (index.row + 1, index.column),
                 ("Bottom", "Right") => (index.row + 1, index.column + 1),
                 _ => (-1, -1)
             });
 
-        static readonly IEnumerable<(string rowPosition, string columnPosition)> Positions = new[] { "Top", "Middle", "Bottom" }.SelectMany(_ => new[] { "Left", "Right" }, (rowPosition, colPosition) => (rowPosition, colPosition));
+        static readonly IEnumerable<(string rowPosition, string columnPosition)> Positions = new[] { "Top", "Middle", "Bottom" }.SelectMany(_ => new[] { "Left", "Center", "Right" }, (rowPosition, colPosition) => (rowPosition, colPosition));
 
         static bool IsValidIndex((int maxRowIndex, int maxColumnIndex) bounds, (int row, int column) index) =>
             index.row >= 0 &&
