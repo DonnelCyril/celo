@@ -1,5 +1,5 @@
 ```csharp
-        public class Program
+    public class Program
     {
 
         public static void Main(string[] args)
@@ -69,9 +69,11 @@
                 _ => (-1, -1)
             });
 
-        static readonly IEnumerable<(string rowPosition, string columnPosition)> Positions = new[] { "Top", "Middle", "Bottom" }.SelectMany(_ => new[] { "Left", "Center", "Right" }, (rowPosition, colPosition) => (rowPosition, colPosition));
+        static readonly IEnumerable<(string rowPosition, string columnPosition)> Positions =
+            new[] { "Top", "Middle", "Bottom" }.SelectMany(_ => new[] { "Left", "Center", "Right" }, (rowPosition, colPosition) => (rowPosition, colPosition))
+            .ToList();
 
-        static bool IsValidIndex((int maxRowIndex, int maxColumnIndex) bounds, (int row, int column) index) =>
+        private static bool IsValidIndex((int maxRowIndex, int maxColumnIndex) bounds, (int row, int column) index) =>
             index.row >= 0 &&
             index.row < bounds.maxRowIndex &&
             index.column >= 0 &&
